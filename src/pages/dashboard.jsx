@@ -81,7 +81,7 @@ const Dashboard = () => {
           <div className='flex items-center space-x-2'>
             <Sun
               className={`w-5 h-5 ${
-                isDarkMode ? 'text-gray-500' : 'text-yellow-500'
+                isDarkMode ? 'text-gray-500' : 'text-yellow-600'
               }`}
             />
             <Switch
@@ -91,7 +91,7 @@ const Dashboard = () => {
             />
             <Moon
               className={`w-5 h-5 ${
-                isDarkMode ? 'text-blue-400' : 'text-gray-500'
+                isDarkMode ? 'text-blue-400' : 'text-gray-600'
               }`}
             />
           </div>
@@ -101,7 +101,7 @@ const Dashboard = () => {
           <div className='w-full mb-8'>
             <div
               className={`h-1 w-full ${
-                isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
+                isDarkMode ? 'bg-gray-700' : 'bg-gray-300'
               } overflow-hidden rounded-full`}
             >
               <div
@@ -126,9 +126,9 @@ const Dashboard = () => {
           <Card
             className={`${
               isDarkMode
-                ? 'bg-gray-800 text-gray-100'
-                : 'bg-white text-gray-800'
-            } shadow-md hover:shadow-xl transition-shadow duration-300`}
+                ? 'bg-gray-800 text-gray-100 shadow-lg'
+                : 'bg-white text-gray-900 shadow-md'
+            } hover:shadow-xl transition-shadow duration-300`}
           >
             <CardHeader>
               <CardTitle className='flex items-center text-2xl text-blue-400'>
@@ -144,9 +144,9 @@ const Dashboard = () => {
           <Card
             className={`${
               isDarkMode
-                ? 'bg-gray-800 text-gray-100'
-                : 'bg-white text-gray-800'
-            } shadow-md hover:shadow-xl transition-shadow duration-300`}
+                ? 'bg-gray-800 text-gray-100 shadow-lg'
+                : 'bg-white text-gray-900 shadow-md'
+            } hover:shadow-xl transition-shadow duration-300`}
           >
             <CardHeader>
               <CardTitle className='flex items-center text-2xl text-green-400'>
@@ -181,7 +181,7 @@ const Dashboard = () => {
                   isDarkMode
                     ? 'bg-blue-600 hover:bg-blue-700'
                     : 'bg-blue-500 hover:bg-blue-600'
-                } text-white font-semibold py-2 px-4 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center`}
+                } text-white font-semibold py-2 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -205,11 +205,13 @@ const Dashboard = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className={`pl-12 pr-4 py-3 ${
               isDarkMode
-                ? 'bg-gray-800 text-gray-100 border-gray-700'
-                : 'bg-white text-gray-800 border-gray-300'
+                ? 'bg-gray-900 text-gray-100 border-gray-700'
+                : 'bg-white text-gray-900 border-gray-300'
             } border-2 rounded-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
             style={{
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              boxShadow: isDarkMode
+                ? '0 4px 8px rgba(0,0,0,0.3)'
+                : '0 4px 8px rgba(0,0,0,0.1)',
             }}
           />
           <Search className='absolute top-3.5 left-4 text-gray-400' size={20} />
@@ -231,7 +233,6 @@ const Dashboard = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ scale: 1.05 }}
               >
                 <LinkCard
                   url={url}
