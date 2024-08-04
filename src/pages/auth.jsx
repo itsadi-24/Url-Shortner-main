@@ -23,7 +23,7 @@ const Auth = () => {
       <div className='w-full max-w-md p-10 space-y-8 border border-white shadow-2xl rounded-xl bg-gradient-to-br from-white/10 to-white/30 backdrop-filter backdrop-blur-lg border-opacity-20'>
         <div>
           <h2 className='mt-6 text-3xl font-extrabold text-center text-white'>
-            {longLink ? 'Please log in to continue' : 'Welcome back'}
+            {longLink ? 'Please log in to continue' : 'Welcome back😊'}
           </h2>
           <p className='mt-2 text-sm text-center text-gray-300'>
             {longLink
