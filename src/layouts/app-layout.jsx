@@ -1,4 +1,5 @@
 import Header from '@/components/header';
+import Footer from '@/components/ui/footer';
 import { Outlet } from 'react-router-dom';
 
 const AppLayout = () => {
@@ -9,30 +10,7 @@ const AppLayout = () => {
         <Outlet />
       </main>
       {/* footer */}
-      <div className='p-10 text-center bg-gray-700'>
-        Made with{' '}
-        <a
-          href='https://react.dev/'
-          className='hover:bg-pink-800 hover:text-xl'
-        >
-          {' '}
-          React
-        </a>{' '}
-        +{' '}
-        <a
-          href='https://vitejs.dev/'
-          className='hover:bg-pink-800 hover:text-xl'
-        >
-          Vite{' '}
-        </a>{' '}
-        by{' '}
-        <a
-          href='https://www.linkedin.com/in/rohit-sharma50/'
-          className='hover:bg-red-300'
-        >
-          Rohit Sharma
-        </a>{' '}
-      </div>
+      <Footer />
     </div>
   );
 };

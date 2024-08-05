@@ -9,6 +9,7 @@ import {
   Plus,
   Moon,
   Sun,
+  Zap,
 } from 'lucide-react';
 import Error from '@/components/error';
 import { UrlState } from '@/context';
@@ -60,8 +61,8 @@ const Dashboard = () => {
     <div
       className={`min-h-screen ${
         isDarkMode
-          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700'
-          : 'bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200'
+          ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900'
+          : 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50'
       } transition-colors duration-300`}
     >
       <div className='container px-4 py-12 mx-auto'>
@@ -72,26 +73,28 @@ const Dashboard = () => {
           transition={{ duration: 0.7 }}
         >
           <h1
-            className={`text-4xl font-extrabold ${
-              isDarkMode ? 'text-gray-100' : 'text-gray-900'
+            className={`text-5xl font-extrabold ${
+              isDarkMode
+                ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'
+                : 'text-indigo-700'
             }`}
           >
             Dashboard
           </h1>
-          <div className='flex items-center space-x-2'>
+          <div className='flex items-center p-2 space-x-2 bg-white rounded-full bg-opacity-20'>
             <Sun
               className={`w-5 h-5 ${
-                isDarkMode ? 'text-gray-500' : 'text-yellow-600'
+                isDarkMode ? 'text-gray-400' : 'text-yellow-500'
               }`}
             />
             <Switch
               checked={isDarkMode}
               onCheckedChange={setIsDarkMode}
-              className={`${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}
+              className={`${isDarkMode ? 'bg-indigo-600' : 'bg-purple-400'}`}
             />
             <Moon
               className={`w-5 h-5 ${
-                isDarkMode ? 'text-blue-400' : 'text-gray-600'
+                isDarkMode ? 'text-indigo-400' : 'text-gray-600'
               }`}
             />
           </div>
@@ -100,25 +103,22 @@ const Dashboard = () => {
         {(loading || loadingClicks) && (
           <div className='w-full mb-8'>
             <div
-              className={`h-1 w-full ${
-                isDarkMode ? 'bg-gray-700' : 'bg-gray-300'
+              className={`h-2 w-full ${
+                isDarkMode ? 'bg-gray-700' : 'bg-indigo-200'
               } overflow-hidden rounded-full`}
             >
-              <div
-                className='h-full'
-                style={{
-                  background:
-                    'linear-gradient(90deg, rgba(255,255,255,0.2) 25%, rgba(0,0,0,0.1) 50%, rgba(255,255,255,0.2) 75%)',
-                  backgroundSize: '200% 100%',
-                  animation: 'loading 1.5s infinite',
-                }}
-              ></div>
+              <motion.div
+                className='h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500'
+                initial={{ x: '-100%' }}
+                animate={{ x: '100%' }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
+              />
             </div>
           </div>
         )}
 
         <motion.div
-          className='grid grid-cols-1 gap-8 mb-12 md:grid-cols-2'
+          className='grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3'
           variants={fadeInUp}
           initial='initial'
           animate='animate'
@@ -126,95 +126,121 @@ const Dashboard = () => {
           <Card
             className={`${
               isDarkMode
-                ? 'bg-gray-800 text-gray-100 shadow-lg'
-                : 'bg-white text-gray-900 shadow-md'
-            } hover:shadow-xl transition-shadow duration-300`}
+                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
+                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
+            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
           >
             <CardHeader>
-              <CardTitle className='flex items-center text-2xl text-blue-400'>
+              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
                 <LinkIcon className='mr-3' size={28} />
                 Links Created
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-5xl font-bold'>{urls?.length || 0}</p>
+              <p className='text-6xl font-bold'>{urls?.length || 0}</p>
             </CardContent>
           </Card>
 
           <Card
             className={`${
               isDarkMode
-                ? 'bg-gray-800 text-gray-100 shadow-lg'
-                : 'bg-white text-gray-900 shadow-md'
-            } hover:shadow-xl transition-shadow duration-300`}
+                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
+                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
+            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
           >
             <CardHeader>
-              <CardTitle className='flex items-center text-2xl text-green-400'>
+              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-600'>
                 <MousePointerClick className='mr-3' size={28} />
                 Total Clicks
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-5xl font-bold'>{clicks?.length || 0}</p>
+              <p className='text-6xl font-bold'>{clicks?.length || 0}</p>
+            </CardContent>
+          </Card>
+
+          <Card
+            className={`${
+              isDarkMode
+                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
+                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
+            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
+          >
+            <CardHeader>
+              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600'>
+                <Zap className='mr-3' size={28} />
+                Efficiency
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className='text-6xl font-bold'>
+                {urls?.length
+                  ? ((clicks?.length || 0) / urls.length).toFixed(2)
+                  : '0.00'}
+              </p>
+              <p className='mt-2 text-sm text-gray-400'>Clicks per link</p>
             </CardContent>
           </Card>
         </motion.div>
 
         <motion.div
-          className='flex items-center justify-between mb-8'
+          className='flex flex-col items-center justify-between mb-8 space-y-4 md:flex-row md:space-y-0'
           variants={fadeInUp}
           initial='initial'
           animate='animate'
         >
           <h2
             className={`text-3xl font-bold ${
-              isDarkMode ? 'text-gray-100' : 'text-gray-900'
+              isDarkMode ? 'text-indigo-200' : 'text-indigo-800'
             }`}
           >
             My Links
           </h2>
-          <CreateLink>
-            {({ onClick }) => (
-              <motion.button
-                onClick={onClick}
-                className={`${
+          <div className='flex items-center space-x-4'>
+            <motion.div
+              className='relative'
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Input
+                type='text'
+                placeholder='Search links...'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={`pl-12 pr-4 py-3 w-64 ${
                   isDarkMode
-                    ? 'bg-blue-600 hover:bg-blue-700'
-                    : 'bg-blue-500 hover:bg-blue-600'
-                } text-white font-semibold py-2 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Plus className='mr-2' size={20} />
-                Create Link
-              </motion.button>
-            )}
-          </CreateLink>
-        </motion.div>
-
-        <motion.div
-          className='relative mb-12'
-          variants={fadeInUp}
-          initial='initial'
-          animate='animate'
-        >
-          <Input
-            type='text'
-            placeholder='Search links...'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={`pl-12 pr-4 py-3 ${
-              isDarkMode
-                ? 'bg-gray-900 text-gray-100 border-gray-700'
-                : 'bg-white text-gray-900 border-gray-300'
-            } border-2 rounded-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-            style={{
-              boxShadow: isDarkMode
-                ? '0 4px 8px rgba(0,0,0,0.3)'
-                : '0 4px 8px rgba(0,0,0,0.1)',
-            }}
-          />
-          <Search className='absolute top-3.5 left-4 text-gray-400' size={20} />
+                    ? 'bg-gray-800 text-indigo-100 border-gray-700'
+                    : 'bg-white text-indigo-900 border-indigo-200'
+                } border-2 rounded-full focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 transition-all duration-300`}
+                style={{
+                  boxShadow: isDarkMode
+                    ? '0 4px 8px rgba(49,46,129,0.2)'
+                    : '0 4px 8px rgba(99,102,241,0.1)',
+                }}
+              />
+              <Search
+                className='absolute top-3.5 left-4 text-indigo-400'
+                size={20}
+              />
+            </motion.div>
+            <CreateLink>
+              {({ onClick }) => (
+                <motion.button
+                  onClick={onClick}
+                  className={`${
+                    isDarkMode
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700'
+                      : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700'
+                  } text-white font-semibold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Plus className='mr-2' size={20} />
+                  Create Link
+                </motion.button>
+              )}
+            </CreateLink>
+          </div>
         </motion.div>
 
         {error && <Error message={error?.message} />}

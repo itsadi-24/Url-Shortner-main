@@ -1,187 +1,252 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {BarLoader, BeatLoader} from "react-spinners";
-import {Button} from "@/components/ui/button";
-import useFetch from "@/hooks/use-fetch";
-import {useEffect, useMemo} from "react";
-import {deleteUrl, getUrl} from "@/db/apiUrls";
-import {UrlState} from "@/context";
-import  { getClicksForUrl}  from "@/db/apiClicks";
-import {Copy, Download, LinkIcon, Trash} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import DeviceStats from "../components/ui/device-stats";
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { BarLoader, BeatLoader } from 'react-spinners';
+import { Button } from '@/components/ui/button';
+import useFetch from '@/hooks/use-fetch';
+import { deleteUrl, getUrl } from '@/db/apiUrls';
+import { UrlState } from '@/context';
+import { getClicksForUrl } from '@/db/apiClicks';
+import { Copy, Download, LinkIcon, Trash, CheckCircle } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import DeviceStats from '../components/ui/device-stats';
+import Location from '../components/ui/location-stats';
+import { motion } from 'framer-motion';
 
- import Location from "../components/ui/location-stats"; 
-
-
-
-
- const Link = () => {
-
-const downloadImage=()=>{
-  const imageUrl=url?.qr;
-  const fileName=url?.title;
-
-  const anchor =document.createElement("a");
-  anchor.href=imageUrl;
-  anchor.download=fileName;
-
-  document.body.appendChild(anchor);
-
-  anchor.click(); 
-  document.body.removeChild(anchor);
-}
-function replaceDashboardWithID(id, short_url) {
-  // Get the current URL
-  const currentUrl = window.location.href;
-  
-  // Remove '/link/id' and append the ID
-  const newUrl = currentUrl.replace('/link/'+ id, '/'+short_url);
-  
-  return newUrl;
-} 
-  const {id} =useParams();
-  const {user} = UrlState();
+const Link = () => {
+  const { id } = useParams();
+  const { user } = UrlState();
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
 
   const {
     loading,
-    data:url,
+    data: url,
     fn,
     error,
-  } = useFetch(getUrl, {id, user_id: user?.id});
+  } = useFetch(getUrl, { id, user_id: user?.id });
 
   const {
-    loading:loadingStats,
-    data:stats,
+    loading: loadingStats,
+    data: stats,
     fn: fnStats,
   } = useFetch(getClicksForUrl, id);
 
-  const {loading: loadingDelete, fn:fnDelete} = useFetch(deleteUrl, id);
+  const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, id);
 
   useEffect(() => {
     fn();
-    
   }, []);
 
   useEffect(() => {
-    if(!error && loading === false) fnStats();
-  }, [loading,error]);
+    if (!error && loading === false) fnStats();
+  }, [loading, error]);
 
-
-  if(error){
-    navigate("/dashboard");
+  if (error) {
+    navigate('/dashboard');
   }
 
-  let link= "";
-  if(url){
-    link = url?.custom_url ? url?.custom_url : url.short_url;
-  } 
-  const newLink = useMemo(() => (url ? replaceDashboardWithID(url.id, url?.short_url) : ""), [url]);
- 
+  const downloadImage = () => {
+    const imageUrl = url?.qr;
+    const fileName = url?.title;
+    const anchor = document.createElement('a');
+    anchor.href = imageUrl;
+    anchor.download = fileName;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+  };
 
-  return (  
-    <>    
-         {(loading || loadingStats) && (<BarLoader width={"100%"} color="#36d7b7" />)}
-       <div className="flex flex-row gap-8 max-xl:flex-col justify-between">
-       <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
-             <span className="text-4xl font-extrabold  cursor-pointer">{url?.title}</span> 
-        <a 
-              href={newLink} 
-              target="_blank"
-              className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
-            >{newLink}
-             </a> <br/>
-            
-             <a href={url?.original_url} 
-             target="_blank"
-             className="flex item-center gap-1 hover:underline cursor-pointer"
-             >
-             <LinkIcon className="p-1" /> 
-             {url?.original_url}
-              </a>
-               <span className="flex item-end font-extralight text-sm">
-                 {new Date(url?.created_at).toLocaleString()}
-               </span>
-               <div className="flex gap-2">
-             <Button 
-             variant="ghost" 
-             onClick={()=> 
-                navigator.clipboard.writeText(newLink) }>
-                <Copy />
-             </Button >
-             
-             <Button 
-             variant="ghost"
-              onClick={downloadImage} 
-               >
-                <Download />
-             </Button>
+  function replaceDashboardWithID(id, short_url) {
+    const currentUrl = window.location.href;
+    return currentUrl.replace('/link/' + id, '/' + short_url);
+  }
 
-             <Button
-              variant="ghost"
-              onClick={() =>
-                fnDelete().then(() => {
-                  navigate("/dashboard");
-                })
-              }
-              disable={loadingDelete}
-            >
-              {loadingDelete ? (
-                <BeatLoader size={5} color="white" />
-              ) : (
-                <Trash />
-              )}
-            </Button>
-             </div>
-             <img 
-        src={url?.qr} 
-        alt="Qr code"
-        className="w-11/12 self-centersm:self-start ring-blue-500 p-1 "
-        />
+  const newLink = useMemo(
+    () => (url ? replaceDashboardWithID(url.id, url?.short_url) : ''),
+    [url]
+  );
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(newLink);
+    setCopied(true);
+
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className='min-h-screen p-8 text-white bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800'>
+      {(loading || loadingStats) && (
+        <BarLoader width={'100%'} color='#f472b6' />
+      )}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className='mx-auto max-w-7xl'
+      >
+        <h1 className='mb-12 text-5xl font-extrabold tracking-tight text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300'>
+          Link Details
+        </h1>
+        <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+            className='col-span-1'
+          >
+            <Card className='h-full overflow-hidden bg-white border-0 shadow-xl bg-opacity-10 backdrop-filter backdrop-blur-lg'>
+              <CardHeader className='bg-gradient-to-r from-pink-500 to-purple-500'>
+                <CardTitle className='text-2xl font-bold text-white'>
+                  {url?.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className='p-6 space-y-6'>
+                <div className='relative group'>
+                  <a
+                    href={newLink}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='text-xl font-semibold text-blue-300 break-all transition duration-300 hover:text-blue-200'
+                  >
+                    {newLink}
+                  </a>
+                  <div className='absolute inset-0 transition-opacity duration-300 bg-blue-500 rounded opacity-0 group-hover:opacity-10'></div>
+                </div>
+                <a
+                  href={url?.original_url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center gap-2 text-gray-300 transition duration-300 hover:text-white'
+                >
+                  <LinkIcon size={16} />
+                  <span className='break-all'>{url?.original_url}</span>
+                </a>
+                <p className='text-sm text-gray-400'>
+                  Created: {new Date(url?.created_at).toLocaleString()}
+                </p>
+                <div className='flex gap-2'>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={handleCopy}
+                    className={`bg-pink-500 hover:bg-pink-600 text-white border-0 transition duration-300 ${
+                      copied ? 'bg-green-500 hover:bg-green-600' : ''
+                    }`}
+                  >
+                    {copied ? <CheckCircle size={16} /> : <Copy size={16} />}
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={downloadImage}
+                    className='text-white transition duration-300 bg-purple-500 border-0 hover:bg-purple-600'
+                  >
+                    <Download size={16} />
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() =>
+                      fnDelete().then(() => {
+                        navigate('/dashboard');
+                      })
+                    }
+                    disabled={loadingDelete}
+                    className='text-white transition duration-300 bg-red-500 border-0 hover:bg-red-600'
+                  >
+                    {loadingDelete ? (
+                      <BeatLoader size={5} color='white' />
+                    ) : (
+                      <Trash size={16} />
+                    )}
+                  </Button>
+                </div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                  className='p-4 mt-6 bg-white rounded-lg bg-opacity-20'
+                >
+                  <img
+                    src={url?.qr}
+                    alt='QR code'
+                    className='w-full max-w-xs mx-auto rounded-lg shadow-lg'
+                  />
+                </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+            className='lg:col-span-2'
+          >
+            <Card className='h-full overflow-hidden bg-white border-0 shadow-xl bg-opacity-10 backdrop-filter backdrop-blur-lg'>
+              <CardHeader className='bg-gradient-to-r from-purple-500 to-pink-500'>
+                <CardTitle className='text-2xl font-bold text-white'>
+                  Statistics
+                </CardTitle>
+              </CardHeader>
+              <CardContent className='p-6'>
+                {stats && stats.length ? (
+                  <div className='space-y-8'>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                      className='p-6 text-center rounded-lg shadow-lg bg-gradient-to-r from-pink-500 to-purple-500'
+                    >
+                      <h3 className='mb-2 text-xl font-semibold text-white'>
+                        Total Clicks
+                      </h3>
+                      <p className='text-6xl font-bold text-white'>
+                        {stats.length}
+                      </p>
+                    </motion.div>
+                    <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Card className='overflow-hidden bg-white border-0 shadow-lg bg-opacity-20'>
+                          <CardHeader className='bg-gradient-to-r from-blue-500 to-cyan-500'>
+                            <CardTitle className='text-lg font-semibold text-white'>
+                              Location Stats
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className='p-4'>
+                            <Location stats={stats} />
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Card className='overflow-hidden bg-white border-0 shadow-lg bg-opacity-20'>
+                          <CardHeader className='bg-gradient-to-r from-green-500 to-teal-500'>
+                            <CardTitle className='text-lg font-semibold text-white'>
+                              Device Stats
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className='p-4'>
+                            <DeviceStats stats={stats} />
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </div>
+                  </div>
+                ) : (
+                  <p className='text-lg text-center text-gray-300'>
+                    {loadingStats === false
+                      ? 'No statistics available yet'
+                      : 'Loading statistics...'}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
-        <Card className="sm:w-3/5">
-  <CardHeader>
-    <CardTitle className="text-4xl font-extrabold">Stats</CardTitle>
-  </CardHeader>
-{ stats && stats?.length ?(
-  <CardContent className="flex flex-col gap-6">
-   <Card>
-  <CardHeader>
-    <CardTitle>Total Clicks</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <p>{stats?.length}</p>
-  </CardContent>
-  
-</Card>
-   <CardTitle>
-  <Location stats={stats} />
-   </CardTitle>
-<CardTitle>
- <DeviceStats stats={stats}/>
-</CardTitle>
+      </motion.div>
+    </div>
+  );
+};
 
-</CardContent>
-):(
-<CardContent>
-  { loadingStats == false
-  ? "no Statistics yet"
-: "Loading Statistics"}
-</CardContent>)
-  }
-  
-</Card>
-
-       </div>
-       
-    
-    
-    </>
-  )
-}
 export default Link;
