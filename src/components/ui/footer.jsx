@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className='py-3 bg-gradient-to-r from-gray-800 via-gray-900 to-black'>
+    <footer className='py-3 bg-gradient-to-br via-purple-900 to-violet-900 '>
       <div className='container px-6 mx-auto text-center'>
         <div className='relative inline-block px-6 py-3 bg-white rounded-lg shadow-lg bg-opacity-10 backdrop-filter backdrop-blur-lg'>
           <a
