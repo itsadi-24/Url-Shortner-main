@@ -18,7 +18,7 @@ const LandingPage = () => {
     e.preventDefault();
     if (longUrl) {
       setShortUrl(
-        `https://short.url/${Math.random().toString(36).substr(2, 5)}`
+        `http://localhost:5173/${Math.random().toString(36).substr(2, 5)}`
       );
     }
   };

@@ -37,11 +37,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     fnUrls();
-  }, []);
+  }, [fnUrls]);
 
   useEffect(() => {
     if (urls?.length) fnClicks();
-  }, [urls?.length]);
+  }, [urls?.length, fnClicks]);
 
   const filterUrls = urls?.filter((url) =>
     url.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -62,7 +62,7 @@ const Dashboard = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          <h1 className='text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
+          <h1 className='text-4xl font-extrabold text-transparent md:text-5xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
             Dashboard
           </h1>
         </motion.div>
@@ -86,39 +86,43 @@ const Dashboard = () => {
           initial='initial'
           animate='animate'
         >
-          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
+          <Card className='text-indigo-100 transition-transform duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
-              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
-                <LinkIcon className='mr-3' size={28} />
+              <CardTitle className='flex items-center text-xl text-transparent md:text-2xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
+                <LinkIcon className='mr-3' size={24} />
                 Links Created
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-6xl font-bold'>{urls?.length || 0}</p>
+              <p className='text-4xl font-bold md:text-6xl'>
+                {urls?.length || 0}
+              </p>
             </CardContent>
           </Card>
 
-          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
+          <Card className='text-indigo-100 transition-transform duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
-              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-600'>
-                <MousePointerClick className='mr-3' size={28} />
+              <CardTitle className='flex items-center text-xl text-transparent md:text-2xl bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-600'>
+                <MousePointerClick className='mr-3' size={24} />
                 Total Clicks
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-6xl font-bold'>{clicks?.length || 0}</p>
+              <p className='text-4xl font-bold md:text-6xl'>
+                {clicks?.length || 0}
+              </p>
             </CardContent>
           </Card>
 
-          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
+          <Card className='text-indigo-100 transition-transform duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
-              <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600'>
-                <Zap className='mr-3' size={28} />
+              <CardTitle className='flex items-center text-xl text-transparent md:text-2xl bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600'>
+                <Zap className='mr-3' size={24} />
                 Efficiency
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-6xl font-bold'>
+              <p className='text-4xl font-bold md:text-6xl'>
                 {urls?.length
                   ? ((clicks?.length || 0) / urls.length).toFixed(2)
                   : '0.00'}
@@ -134,7 +138,9 @@ const Dashboard = () => {
           initial='initial'
           animate='animate'
         >
-          <h2 className='text-3xl font-bold text-indigo-200'>My Links</h2>
+          <h2 className='text-2xl font-bold text-indigo-200 md:text-3xl'>
+            My Links
+          </h2>
           <div className='flex items-center space-x-4'>
             <motion.div
               className='relative'
@@ -146,7 +152,7 @@ const Dashboard = () => {
                 placeholder='Search links...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='w-64 py-3 pl-12 pr-4 text-indigo-100 transition-all duration-300 bg-gray-800 border-2 border-gray-700 rounded-full focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
+                className='w-full py-3 pl-12 pr-4 text-indigo-100 transition-all duration-300 bg-gray-800 border-2 border-gray-700 rounded-full md:w-64 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
                 style={{
                   boxShadow: '0 4px 8px rgba(49,46,129,0.2)',
                 }}
