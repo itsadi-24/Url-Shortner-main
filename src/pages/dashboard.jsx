@@ -7,8 +7,6 @@ import {
   Link as LinkIcon,
   MousePointerClick,
   Plus,
-  Moon,
-  Sun,
   Zap,
 } from 'lucide-react';
 import Error from '@/components/error';
@@ -18,11 +16,9 @@ import { getUrls } from '@/db/apiUrls';
 import { getClicksForUrls } from '@/db/apiClicks';
 import LinkCard from '@/components/ui/Link-card';
 import { CreateLink } from '@/components/ui/create-link';
-import { Switch } from '@/components/ui/switch';
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const { user } = UrlState();
   const {
     loading,
@@ -58,13 +54,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen ${
-        isDarkMode
-          ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900'
-          : 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50'
-      } transition-colors duration-300`}
-    >
+    <div className='min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900'>
       <div className='container px-4 py-12 mx-auto'>
         <motion.div
           className='flex items-center justify-between mb-12'
@@ -72,41 +62,14 @@ const Dashboard = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          <h1
-            className={`text-5xl font-extrabold ${
-              isDarkMode
-                ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'
-                : 'text-indigo-700'
-            }`}
-          >
+          <h1 className='text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
             Dashboard
           </h1>
-          <div className='flex items-center p-2 space-x-2 bg-white rounded-full bg-opacity-20'>
-            <Sun
-              className={`w-5 h-5 ${
-                isDarkMode ? 'text-gray-400' : 'text-yellow-500'
-              }`}
-            />
-            <Switch
-              checked={isDarkMode}
-              onCheckedChange={setIsDarkMode}
-              className={`${isDarkMode ? 'bg-indigo-600' : 'bg-purple-400'}`}
-            />
-            <Moon
-              className={`w-5 h-5 ${
-                isDarkMode ? 'text-indigo-400' : 'text-gray-600'
-              }`}
-            />
-          </div>
         </motion.div>
 
         {(loading || loadingClicks) && (
           <div className='w-full mb-8'>
-            <div
-              className={`h-2 w-full ${
-                isDarkMode ? 'bg-gray-700' : 'bg-indigo-200'
-              } overflow-hidden rounded-full`}
-            >
+            <div className='w-full h-2 overflow-hidden bg-gray-700 rounded-full'>
               <motion.div
                 className='h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500'
                 initial={{ x: '-100%' }}
@@ -123,13 +86,7 @@ const Dashboard = () => {
           initial='initial'
           animate='animate'
         >
-          <Card
-            className={`${
-              isDarkMode
-                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
-                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
-            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
-          >
+          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
               <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
                 <LinkIcon className='mr-3' size={28} />
@@ -141,13 +98,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card
-            className={`${
-              isDarkMode
-                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
-                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
-            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
-          >
+          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
               <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-600'>
                 <MousePointerClick className='mr-3' size={28} />
@@ -159,13 +110,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card
-            className={`${
-              isDarkMode
-                ? 'bg-gray-800 text-indigo-100 shadow-lg shadow-purple-500/20'
-                : 'bg-white text-indigo-900 shadow-md shadow-indigo-100/50'
-            } hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
-          >
+          <Card className='text-indigo-100 transition-all duration-300 transform bg-gray-800 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:scale-105'>
             <CardHeader>
               <CardTitle className='flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600'>
                 <Zap className='mr-3' size={28} />
@@ -189,13 +134,7 @@ const Dashboard = () => {
           initial='initial'
           animate='animate'
         >
-          <h2
-            className={`text-3xl font-bold ${
-              isDarkMode ? 'text-indigo-200' : 'text-indigo-800'
-            }`}
-          >
-            My Links
-          </h2>
+          <h2 className='text-3xl font-bold text-indigo-200'>My Links</h2>
           <div className='flex items-center space-x-4'>
             <motion.div
               className='relative'
@@ -207,15 +146,9 @@ const Dashboard = () => {
                 placeholder='Search links...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`pl-12 pr-4 py-3 w-64 ${
-                  isDarkMode
-                    ? 'bg-gray-800 text-indigo-100 border-gray-700'
-                    : 'bg-white text-indigo-900 border-indigo-200'
-                } border-2 rounded-full focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 transition-all duration-300`}
+                className='w-64 py-3 pl-12 pr-4 text-indigo-100 transition-all duration-300 bg-gray-800 border-2 border-gray-700 rounded-full focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
                 style={{
-                  boxShadow: isDarkMode
-                    ? '0 4px 8px rgba(49,46,129,0.2)'
-                    : '0 4px 8px rgba(99,102,241,0.1)',
+                  boxShadow: '0 4px 8px rgba(49,46,129,0.2)',
                 }}
               />
               <Search
@@ -227,11 +160,7 @@ const Dashboard = () => {
               {({ onClick }) => (
                 <motion.button
                   onClick={onClick}
-                  className={`${
-                    isDarkMode
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700'
-                      : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700'
-                  } text-white font-semibold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center`}
+                  className='flex items-center px-6 py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 hover:shadow-lg'
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -260,11 +189,7 @@ const Dashboard = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
-                <LinkCard
-                  url={url}
-                  fetchUrls={fnUrls}
-                  isDarkMode={isDarkMode}
-                />
+                <LinkCard url={url} fetchUrls={fnUrls} isDarkMode={true} />
               </motion.div>
             ))}
           </motion.div>
