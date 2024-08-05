@@ -7,7 +7,7 @@ export default function Footer() {
             href='https://www.adiprasan.me/'
             target='_blank'
             rel='noopener noreferrer'
-            className='relative font-sans text-lg text-white transition-all duration-300 ease-in-out cursor-pointer hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 group'
+            className='relative text-lg text-white transition-all duration-300 ease-in-out cursor-pointer font-cursive hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 group'
           >
             <span className='font-extrabold tracking-wide'>
               Made with <span className='text-red-500'>💓</span> by Adi
@@ -15,13 +15,13 @@ export default function Footer() {
             <span className='absolute inset-x-0 bottom-0 h-0.5 bg-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out'></span>
           </a>
         </div>
-        <p>
+        <p className='mt-4 text-lg text-white font-cursive'>
           Connect with me on{' '}
           <a
             href='https://github.com/itsadi-24'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-white transition duration-300 hover:text-purple-400 hover:underline '
+            className='transition duration-300 hover:text-purple-400 hover:underline'
           >
             GitHub
           </a>{' '}
@@ -30,7 +30,7 @@ export default function Footer() {
             href='https://www.linkedin.com/in/adi-prasan-khuntia-3944072a5/'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-white transition duration-300 hover:text-purple-400 hover:underline'
+            className='transition duration-300 hover:text-purple-400 hover:underline'
           >
             LinkedIn
           </a>
