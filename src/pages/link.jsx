@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BarLoader, BeatLoader } from 'react-spinners';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,6 @@ import { Copy, Download, LinkIcon, Trash, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DeviceStats from '../components/ui/device-stats';
 import Location from '../components/ui/location-stats';
-import { motion } from 'framer-motion';
 
 const Link = () => {
   const { id } = useParams();
@@ -78,21 +77,12 @@ const Link = () => {
       {(loading || loadingStats) && (
         <BarLoader width={'100%'} color='#f472b6' />
       )}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className='mx-auto max-w-7xl'
-      >
+      <div className='mx-auto max-w-7xl'>
         <h1 className='mb-12 text-5xl font-extrabold tracking-tight text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300'>
           Link Details
         </h1>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-            className='col-span-1'
-          >
+          <div className='col-span-1'>
             <Card className='h-full overflow-hidden bg-white border-0 shadow-xl bg-opacity-10 backdrop-filter backdrop-blur-lg'>
               <CardHeader className='bg-gradient-to-r from-pink-500 to-purple-500'>
                 <CardTitle className='text-2xl font-bold text-white'>
@@ -160,25 +150,17 @@ const Link = () => {
                     )}
                   </Button>
                 </div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                  className='p-4 mt-6 bg-white rounded-lg bg-opacity-20'
-                >
+                <div className='p-4 mt-6 bg-white rounded-lg bg-opacity-20'>
                   <img
                     src={url?.qr}
                     alt='QR code'
                     className='w-full max-w-xs mx-auto rounded-lg shadow-lg'
                   />
-                </motion.div>
+                </div>
               </CardContent>
             </Card>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-            className='lg:col-span-2'
-          >
+          </div>
+          <div className='lg:col-span-2'>
             <Card className='h-full overflow-hidden bg-white border-0 shadow-xl bg-opacity-10 backdrop-filter backdrop-blur-lg'>
               <CardHeader className='bg-gradient-to-r from-purple-500 to-pink-500'>
                 <CardTitle className='text-2xl font-bold text-white'>
@@ -188,23 +170,16 @@ const Link = () => {
               <CardContent className='p-6'>
                 {stats && stats.length ? (
                   <div className='space-y-8'>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                      className='p-6 text-center rounded-lg shadow-lg bg-gradient-to-r from-pink-500 to-purple-500'
-                    >
+                    <div className='p-6 text-center rounded-lg shadow-lg bg-gradient-to-r from-pink-500 to-purple-500'>
                       <h3 className='mb-2 text-xl font-semibold text-white'>
                         Total Clicks
                       </h3>
                       <p className='text-6xl font-bold text-white'>
                         {stats.length}
                       </p>
-                    </motion.div>
+                    </div>
                     <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      <div>
                         <Card className='overflow-hidden bg-white border-0 shadow-lg bg-opacity-20'>
                           <CardHeader className='bg-gradient-to-r from-blue-500 to-cyan-500'>
                             <CardTitle className='text-lg font-semibold text-white'>
@@ -215,11 +190,8 @@ const Link = () => {
                             <Location stats={stats} />
                           </CardContent>
                         </Card>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      </div>
+                      <div>
                         <Card className='overflow-hidden bg-white border-0 shadow-lg bg-opacity-20'>
                           <CardHeader className='bg-gradient-to-r from-green-500 to-teal-500'>
                             <CardTitle className='text-lg font-semibold text-white'>
@@ -230,7 +202,7 @@ const Link = () => {
                             <DeviceStats stats={stats} />
                           </CardContent>
                         </Card>
-                      </motion.div>
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -242,9 +214,9 @@ const Link = () => {
                 )}
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
