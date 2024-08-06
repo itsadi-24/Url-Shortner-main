@@ -24,23 +24,15 @@ const Header = () => {
     <>
       <nav className='flex items-center justify-between px-6 py-4 shadow-lg bg-gradient-to-r from-gray-900 to-indigo-900'>
         <a href='/' className='flex items-center space-x-4 group'>
-          <div className='relative w-12 h-12 overflow-hidden transition-transform duration-300 transform rounded-full shadow-lg group-hover:scale-110'>
-            <img
-              src='/logo.jpg'
-              className='object-cover w-full h-full'
-              alt='url-shortener logo'
-            />
-            <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/30 to-fuchsia-500/30'></div>
-          </div>
-          <span className='font-serif text-2xl text-transparent transition-all duration-300 bg-clip-text bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-orange-400 group-hover:tracking-wider'>
-            URL Shortener
+          <span className='text-2xl font-bold text-transparent transition-all duration-300 bg-clip-text bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-orange-400 group-hover:tracking-wider'>
+            🔗URL Shortener
           </span>
         </a>
         <div>
           {!user ? (
             <Button
               onClick={() => navigate('/auth')}
-              className='px-6 py-2 font-semibold text-white transition-all duration-300 transform rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-gray-900'
+              className='px-6 py-2 font-semibold text-white transition-all duration-300 transform rounded-sm bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-gray-900'
             >
               Login
             </Button>
