@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { user } = UrlState();
   const {
-    loading,
+    loading: loadingUrls,
     error,
     data: urls,
     fn: fnUrls,
@@ -35,6 +35,8 @@ const Dashboard = () => {
     urls?.map((url) => url.id)
   );
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fnUrls();
   }, [fnUrls]);
@@ -42,6 +44,12 @@ const Dashboard = () => {
   useEffect(() => {
     if (urls?.length) fnClicks();
   }, [urls?.length, fnClicks]);
+
+  useEffect(() => {
+    if (!loadingUrls && !loadingClicks) {
+      setIsLoading(false);
+    }
+  }, [loadingUrls, loadingClicks]);
 
   const filterUrls = urls?.filter((url) =>
     url.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -66,19 +74,6 @@ const Dashboard = () => {
             Dashboard
           </h1>
         </motion.div>
-
-        {(loading || loadingClicks) && (
-          <div className='w-full mb-8'>
-            <div className='w-full h-2 overflow-hidden bg-gray-700 rounded-full'>
-              <motion.div
-                className='h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500'
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-              />
-            </div>
-          </div>
-        )}
 
         <motion.div
           className='grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3'
