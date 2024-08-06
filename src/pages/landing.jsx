@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   ArrowRight,
   Link2,
@@ -9,18 +9,15 @@ import {
   QrCode,
   Zap,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
-  const [longUrl, setLongUrl] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
+  const [longUrl, setLongUrl] = useState();
+  const navigate = useNavigate();
 
   const handleShorten = (e) => {
     e.preventDefault();
-    if (longUrl) {
-      setShortUrl(
-        `http://localhost:5173/${Math.random().toString(36).substr(2, 5)}`
-      );
-    }
+    if (longUrl) navigate(`/auth?createNew=${longUrl}`);
   };
 
   const fadeInUp = {
@@ -79,7 +76,7 @@ const LandingPage = () => {
                 <ArrowRight className='inline-block ml-2' size={24} />
               </button>
             </div>
-            <AnimatePresence>
+            {/* <AnimatePresence>
               {shortUrl && (
                 <motion.div
                   className='p-6 bg-indigo-800 bg-opacity-50 border border-indigo-700 shadow-lg rounded-xl'
@@ -101,7 +98,7 @@ const LandingPage = () => {
                   </a>
                 </motion.div>
               )}
-            </AnimatePresence>
+            </AnimatePresence> */}
           </form>
         </motion.div>
 
