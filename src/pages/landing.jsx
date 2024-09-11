@@ -12,7 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
-  const [longUrl, setLongUrl] = useState();
+  const [longUrl, setLongUrl] = useState('');
   const navigate = useNavigate();
 
   const handleShorten = (e) => {
@@ -26,79 +26,76 @@ const LandingPage = () => {
   };
 
   return (
-    <div className='relative min-h-screen overflow-hidden font-sans text-white bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800'>
-      {/* <Header /> */}
-
-      {/* Background Animation */}
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMjIyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=')] opacity-20"></div>
+    <div className='min-h-screen font-sans text-gray-200 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900'>
+      {/* Animated background */}
+      <div className='inset-0 overflow-hidden opacity-20'>
+        <div className='w-full h-full '>
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className='absolute rounded-full mix-blend-screen animate-float'
+              style={{
+                width: `${Math.random() * 5 + 1}px`,
+                height: `${Math.random() * 5 + 1}px`,
+                background: `rgb(${Math.random() * 255}, ${
+                  Math.random() * 255
+                }, ${Math.random() * 255})`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 10 + 10}s`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Main Content */}
-      <div className='container relative z-10 px-4 py-12 mx-auto lg:py-24'>
+      <div className='container relative z-10 px-4 py-16 mx-auto lg:py-24'>
         <motion.div
           className='mb-16 text-center'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className='mb-6 text-6xl font-extrabold leading-tight lg:text-8xl'>
-            <span className='text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-orange-500'>
+          <h1 className='mb-6 text-5xl font-extrabold leading-tight lg:text-7xl'>
+            <span className='text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400'>
               Shorten Your Links
             </span>
           </h1>
-          <p className='max-w-3xl mx-auto mb-8 text-2xl leading-relaxed text-indigo-200'>
-            Transform your URLs into powerful, trackable assets. Shorten,
-            customize, and dominate your digital presence.
+          <p className='max-w-3xl mx-auto mb-8 text-xl leading-relaxed text-gray-300'>
+            Transform long URLs into powerful, trackable assets. Shorten,
+            customize, and elevate your digital presence with our cutting-edge
+            platform.
           </p>
         </motion.div>
 
         <motion.div
-          className='max-w-4xl mx-auto mb-16'
+          className='max-w-4xl mx-auto mb-20'
           initial='hidden'
           animate='visible'
           variants={fadeInUp}
         >
-          <form onSubmit={handleShorten} className='space-y-4'>
+          <form
+            onSubmit={handleShorten}
+            className='p-2 bg-gray-800 bg-opacity-50 rounded-full shadow-xl backdrop-blur-sm'
+          >
             <div className='flex flex-col gap-4 sm:flex-row'>
               <input
                 type='url'
                 placeholder='Enter your long URL here...'
                 value={longUrl}
                 onChange={(e) => setLongUrl(e.target.value)}
-                className='flex-grow px-6 py-4 text-lg text-white placeholder-indigo-300 bg-indigo-800 bg-opacity-50 border border-indigo-700 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400'
+                className='flex-grow px-6 py-4 text-lg text-white placeholder-gray-400 transition-all duration-300 bg-gray-700 bg-opacity-50 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400'
               />
               <button
                 type='submit'
-                className='px-8 py-4 text-lg font-semibold text-white transition duration-300 ease-in-out transform rounded-full shadow-lg bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 hover:shadow-xl'
+                className='px-8 py-4 text-lg font-semibold text-white transition duration-300 ease-in-out transform rounded-full shadow-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 hover:shadow-xl hover:-translate-y-1'
               >
                 Shorten URL
                 <ArrowRight className='inline-block ml-2' size={24} />
               </button>
             </div>
-            {/* <AnimatePresence>
-              {shortUrl && (
-                <motion.div
-                  className='p-6 bg-indigo-800 bg-opacity-50 border border-indigo-700 shadow-lg rounded-xl'
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <p className='mb-2 text-xl font-semibold'>
-                    Your shortened URL:
-                  </p>
-                  <a
-                    href={shortUrl}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='text-lg break-all text-cyan-400 hover:text-cyan-300'
-                  >
-                    {shortUrl}
-                  </a>
-                </motion.div>
-              )}
-            </AnimatePresence> */}
           </form>
         </motion.div>
 
@@ -120,87 +117,66 @@ const LandingPage = () => {
               title: 'Custom Branding',
               description:
                 'Create memorable, branded short links that reinforce your identity.',
-              color: 'from-cyan-500 to-blue-500',
+              color: 'from-blue-400 to-cyan-400',
             },
             {
               icon: BarChart2,
               title: 'Advanced Analytics',
               description:
                 'Gain deep insights into your audience with comprehensive tracking tools.',
-              color: 'from-green-500 to-emerald-500',
+              color: 'from-green-400 to-emerald-400',
             },
             {
               icon: Shield,
               title: 'Robust Security',
               description:
                 'Protect your data with state-of-the-art encryption and security measures.',
-              color: 'from-yellow-500 to-amber-500',
+              color: 'from-yellow-400 to-amber-400',
             },
             {
               icon: Globe,
               title: 'Global Reach',
               description:
                 'Target audiences worldwide with geo-targeting and language customization.',
-              color: 'from-orange-500 to-red-500',
+              color: 'from-purple-400 to-indigo-400',
             },
             {
               icon: QrCode,
               title: 'QR Generation',
               description:
                 'Instantly create QR codes for your shortened URLs to boost offline engagement.',
-              color: 'from-fuchsia-500 to-pink-500',
+              color: 'from-pink-400 to-rose-400',
             },
             {
               icon: Zap,
               title: 'Fast Integration',
               description:
                 'Seamlessly integrate our API with your existing tools and workflows.',
-              color: 'from-purple-500 to-indigo-500',
+              color: 'from-orange-400 to-red-400',
             },
           ].map((feature, index) => (
             <motion.div
               key={index}
-              className={`p-8 rounded-2xl bg-gradient-to-br ${feature.color} shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2`}
+              className={`p-8 rounded-2xl bg-gray-800 bg-opacity-50 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-700 backdrop-blur-sm`}
               variants={fadeInUp}
             >
-              <feature.icon className='w-16 h-16 mb-6 text-white' />
+              <div
+                className={`w-16 h-16 mb-6 rounded-full bg-gradient-to-br ${feature.color} flex items-center justify-center`}
+              >
+                <feature.icon className='w-8 h-8 text-gray-900' />
+              </div>
               <h3 className='mb-4 text-2xl font-bold'>{feature.title}</h3>
-              <p className='text-lg text-white text-opacity-90'>
-                {feature.description}
-              </p>
+              <p className='text-lg text-gray-300'>{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>
       </div>
 
-      {/* Floating Shapes */}
+      {/* Colorful glow effects */}
       <div className='absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none'>
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className='absolute rounded-full mix-blend-screen'
-            style={{
-              width: Math.random() * 300 + 50,
-              height: Math.random() * 300 + 50,
-              backgroundColor: `rgba(${Math.random() * 255}, ${
-                Math.random() * 255
-              }, ${Math.random() * 255}, 0.1)`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: Math.random() * 100 - 50,
-              y: Math.random() * 100 - 50,
-              scale: [1, 1.1, 1],
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 20,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          />
-        ))}
+        <div className='absolute w-64 h-64 bg-pink-500 rounded-full top-1/4 left-1/4 mix-blend-multiply filter blur-xl opacity-20 animate-blob'></div>
+        <div className='absolute w-64 h-64 bg-purple-500 rounded-full top-3/4 right-1/4 mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000'></div>
+        <div className='absolute w-64 h-64 rounded-full bottom-1/4 left-1/2 bg-cyan-500 mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000'></div>
       </div>
     </div>
   );

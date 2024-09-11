@@ -25,7 +25,7 @@ const Header = () => {
       <nav className='flex items-center justify-between px-6 py-4 shadow-lg bg-gradient-to-r from-gray-900 to-indigo-900'>
         <a href='/' className='flex items-center space-x-4 group'>
           <span className='text-2xl font-bold text-transparent transition-all duration-300 bg-clip-text bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-orange-400 group-hover:tracking-wider'>
-            🔗URL Shortener
+            🔗Shortify
           </span>
         </a>
         <div>
